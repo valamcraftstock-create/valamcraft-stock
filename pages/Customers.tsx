@@ -252,6 +252,7 @@ export default function Customers() {
           </div>
       </div>
 
+      {/* Changed aspect-square to a natural flow with min-height to fix footer visibility issue */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
           {filteredData.displayCustomers.map((customer, idx) => {
               const isHighValue = customer.totalSpend >= highValueThreshold && customer.totalSpend > 0;
@@ -262,7 +263,7 @@ export default function Customers() {
               return (
                 <Card 
                     key={customer.id} 
-                    className={`cursor-pointer group aspect-square flex flex-col hover:shadow-xl transition-all duration-300 relative border overflow-hidden ${isHighValue ? 'border-slate-800 bg-slate-50/10 ring-1 ring-slate-200/50 shadow-md' : 'border-slate-200 bg-white'}`}
+                    className={`cursor-pointer group flex flex-col hover:shadow-xl transition-all duration-300 relative border overflow-hidden min-h-[240px] ${isHighValue ? 'border-slate-800 bg-slate-50/10 ring-1 ring-slate-200/50 shadow-md' : 'border-slate-200 bg-white'}`}
                     onClick={() => setViewingCustomer(customer)}
                 >
                     {/* High Value Badge - Clean, Professional Look */}
@@ -300,8 +301,8 @@ export default function Customers() {
                             </div>
                         </div>
 
-                        {/* Footer Status - Strictly packed */}
-                        <div className="w-full pt-1.5 flex flex-col gap-1.5">
+                        {/* Footer Status - Strictly packed and ensured to be visible */}
+                        <div className="w-full pt-1.5 flex flex-col gap-1.5 mt-auto">
                             {hasDue ? (
                                 <Badge variant="destructive" className="w-full justify-center py-0.5 h-4 sm:h-5 text-[8px] sm:text-[10px] font-bold rounded-sm shadow-sm">
                                     DUE: ₹{customer.totalDue.toFixed(0)}
@@ -312,7 +313,7 @@ export default function Customers() {
                                 </Badge>
                             )}
                             
-                            <div className="flex items-center justify-between text-[7px] sm:text-[9px] text-slate-400 px-0.5 font-medium">
+                            <div className="flex items-center justify-between text-[7px] sm:text-[9px] text-slate-400 px-0.5 font-medium min-h-[14px]">
                                 <span className="flex items-center gap-1">
                                     <Activity className={`w-2 h-2 sm:w-2.5 sm:h-2.5 ${isInactive ? 'text-slate-200' : 'text-emerald-500'}`} />
                                     {isInactive ? 'Inactive' : 'Active'}
@@ -464,6 +465,7 @@ export default function Customers() {
                       ))}
                       <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm space-y-2">
                           <div className="flex justify-between text-slate-500 font-bold"><span>Subtotal</span><span>₹{selectedTx.subtotal?.toFixed(2)}</span></div>
+                          {/* Fixed typo 'Leonard' by removing the non-existent function wrapper */}
                           {selectedTx.discount && selectedTx.discount > 0 && <div className="flex justify-between text-emerald-600 font-bold"><span>Discount Applied</span><span>-₹{selectedTx.discount.toFixed(2)}</span></div>}
                           <div className="flex justify-between font-black text-lg pt-2 border-t border-slate-200 text-slate-900"><span>Grand Total</span><span>₹{Math.abs(selectedTx.total).toFixed(2)}</span></div>
                       </div>
